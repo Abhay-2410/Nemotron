@@ -1,0 +1,400 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-bg: #000000;
+  --color-surface: #111111;
+  --color-surface-hover: #1a1a1a;
+  --color-border: #272727;
+  --color-muted: #a1a1aa;
+  --color-muted-dark: #71717a;
+  --color-text: #fafafa;
+  --color-accent-green: #22c55e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+#root {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-text);
+}
+
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-dark);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--color-text);
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-bg);
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: rgba(26, 26, 26, 0.65);
+  transform: scale(1.02);
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.nav-link {
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  padding: 0.5rem 1rem 0.5rem 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.tech-pill:hover {
+  transform: translateY(-2px);
+  border-color: #3f3f46;
+  background-color: var(--color-surface-hover);
+}
+
+.skill-tile {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  /* Opaque fill — no backdrop-filter over the live canvas (major scroll cost). */
+  background-color: rgba(14, 14, 14, 0.94);
+  padding: 1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  contain: layout paint;
+}
+
+.skill-tile:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(22, 22, 22, 0.98);
+}
+
+.snapshot-stat-card {
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.snapshot-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.14);
+  background-color: rgba(26, 26, 26, 0.65);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(14, 14, 14, 0.94);
+  transform: translateZ(0);
+  contain: layout paint;
+}
+
+.contact-field {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.35);
+  padding: 0.875rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.contact-field::placeholder {
+  color: var(--color-muted-dark);
+}
+
+.contact-field:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(0, 0, 0, 0.42);
+}
+
+.contact-field:focus-visible {
+  border-color: rgba(255, 255, 255, 0.18);
+  background-color: rgba(0, 0, 0, 0.48);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+}
+
+.contact-field:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.hero-icon-tile {
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(14, 14, 14, 0.94);
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  contain: layout paint;
+}
+
+.hero-icon-tile:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(22, 22, 22, 0.98);
+}
+
+.hero-ticker {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-block: 1px solid rgba(255, 255, 255, 0.06);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.hero-ticker-track {
+  display: flex;
+  width: max-content;
+  max-width: none;
+  padding-block: 0.625rem;
+  animation: hero-ticker-scroll 46s linear infinite;
+}
+
+.hero-ticker:hover .hero-ticker-track {
+  animation-play-state: paused;
+}
+
+.hero-ticker-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2rem;
+  padding-right: 2rem;
+}
+
+.hero-ticker-item {
+  white-space: nowrap;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--color-muted-dark);
+}
+
+.hero-ticker-name {
+  color: #c97a4a;
+  font-weight: 500;
+}
+
+.hero-photo-panel::before,
+.hero-photo-panel::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  content: '';
+}
+
+.hero-photo-panel::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.035) 0,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+}
+
+.hero-photo-panel::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 48%,
+    transparent 100%
+  );
+  transform: translateY(-110%);
+  animation: hero-scan-sweep 10s ease-in-out infinite;
+}
+
+@keyframes hero-ticker-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes hero-scan-sweep {
+  0%,
+  12% {
+    transform: translateY(-110%);
+  }
+
+  88%,
+  100% {
+    transform: translateY(110%);
+  }
+}
+
+.project-image-wrap {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.project-image-wrap img,
+.project-image-wrap .project-placeholder {
+  transition: transform 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+
+.project-image-wrap:hover img,
+.project-image-wrap:hover .project-placeholder {
+  transform: scale(1.05);
+}
+
+@media (max-width: 639.98px) {
+  .skill-tile {
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 0.375rem;
+  }
+
+  /* iOS Safari zooms into inputs whose font-size is below 16px. */
+  .contact-field {
+    font-size: 1rem;
+  }
+}
+
+@media (hover: none) {
+  .skill-tile:hover,
+  .snapshot-stat-card:hover,
+  .hero-icon-tile:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn-primary,
+  .btn-outline,
+  .nav-link,
+  .tech-pill,
+  .hero-icon-tile,
+  .skill-tile,
+  .snapshot-stat-card,
+  .project-image-wrap img,
+  .project-image-wrap .project-placeholder {
+    transition: none;
+  }
+
+  .btn-primary:hover,
+  .btn-outline:hover,
+  .tech-pill:hover,
+  .hero-icon-tile:hover,
+  .skill-tile:hover,
+  .snapshot-stat-card:hover {
+    transform: none;
+  }
+
+  .hero-ticker-track,
+  .hero-photo-panel::after {
+    animation: none;
+  }
+}
